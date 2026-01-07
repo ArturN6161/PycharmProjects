@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-900">Панель управления</h1>
+            <a href="/logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Выйти</a>
+        </div>
+
+        <!-- Add New Item Form -->
+        <div class="bg-white p-6 rounded-2xl shadow-md mb-8">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">Добавить новую работу</h2>
+            <form method="POST" action="/admin/add_item" enctype="multipart/form-data">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-2">Заголовок</label>
+                        <input name="title" type="text" class="border rounded w-full py-2 px-3" required>
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-2">Цена</label>
+                        <input name="price" type="text" class="border rounded w-full py-2 px-3" required>
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-2">Локация</label>
+                        <input name="location" type="text" class="border rounded w-full py-2 px-3" required>
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 text-sm font-bold mb-2">Фото</label>
+                        <input name="image" type="file" class="border rounded w-full py-2 px-3" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-slate-700 text-sm font-bold mb-2">Описание</label>
+                    <textarea name="description" class="border rounded w-full py-2 px-3" rows="3" required></textarea>
+                </div>
+                <button type="submit"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Добавить</button>
+            </form>
+        </div>
+
+        <!-- Existing Items List -->
+        <div class="bg-white p-6 rounded-2xl shadow-md">
+            <h2 class="text-xl font-bold text-slate-800 mb-4">Текущие работы</h2>
+            <div class="grid gap-4">
+                {% for item in items %}
+                <div class="flex items-center justify-between border-b pb-4 last:border-0">
+                    <div class="flex items-center gap-4">
+                        <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}"
+                            class="w-16 h-16 object-cover rounded-lg">
+                        <div>
+                            <h3 class="font-bold">{{ item.title }}</h3>
+                            <p class="text-sm text-slate-500">{{ item.description }}</p>
+                        </div>
+                    </div>
+                    <form method="POST" action="/admin/delete_item/{{ item.id }}"
+                        onsubmit="return confirm('Удалить?');">
+                        <button type="submit" class="text-red-500 hover:text-red-700 font-bold">Удалить</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

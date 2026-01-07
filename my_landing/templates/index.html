@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ремонт варочных панелей | Артур</title>
+    <meta name="description"
+        content="Частный мастер Артур. Ремонт индукционных и стеклокерамических панелей. Выезд 60 минут. Диагностика 0₽.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans text-slate-800 antialiased bg-slate-50">
+
+    <!-- HEADER -->
+    <header class="fixed w-full z-50 glass-nav border-b border-slate-100/50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center justify-between py-4">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-brand-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-slate-900 block leading-tight">Артур</span>
+                        <span class="text-[11px] font-bold text-brand-600 uppercase tracking-widest block">Частный
+                            Мастер</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:block text-right">
+                        <!-- Anti-spam phone logic -->
+                        <div id="phone-header" class="group">
+                            <button onclick="revealPhoneHeader(this)"
+                                class="block text-lg font-bold text-slate-900 hover:text-brand-600 transition border-b border-dashed border-slate-300 hover:border-brand-600">
+                                Показать телефон
+                            </button>
+                            <span class="text-xs text-green-600 font-medium flex items-center justify-end gap-1">
+                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                В сети
+                            </span>
+                        </div>
+                    </div>
+                    <button onclick="openModal()"
+                        class="btn-shimmer bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold transition shadow-lg active:scale-95">
+                        Вызвать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden relative">
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Text Content: order-1 on mobile (First), order-1 on desktop (First) -->
+                <!-- Исправлено: Текст теперь первый на мобильных устройствах для лучшего восприятия -->
+                <div class="order-2 lg:order-1">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 text-xs font-bold uppercase tracking-wide mb-6 border border-red-100">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        Сломалась техника?
+                    </div>
+                    <!-- Добавлен break-words для защиты от переполнения на очень узких экранах -->
+                    <h1
+                        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-6 break-words">
+                        ВАРОЧНАЯ ПАНЕЛЬ <br>
+                        <span class="text-brand-600">НЕ РАБОТАЕТ?</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 mb-8 font-medium">
+                        Не включается? Выдает ошибку? Трещит? <br>
+                        <span class="text-slate-900 font-bold">Позвоните — решу сегодня!</span>
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-white p-4 rounded-2xl shadow-widget border border-slate-100">
+                            <div class="text-2xl font-bold text-slate-900">0 ₽</div>
+                            <div class="text-sm text-slate-500 font-medium">Диагностика</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-widget border border-slate-100">
+                            <div class="text-2xl font-bold text-slate-900">60 мин</div>
+                            <div class="text-sm text-slate-500 font-medium">Выезд по городу</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openModal()"
+                            class="btn-shimmer flex-1 bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-4 rounded-2xl font-bold transition shadow-xl shadow-brand-500/30 text-center active:scale-95">
+                            Написать о проблеме
+                        </button>
+                        <!-- Исправлено: Кнопка теперь работает автономно на мобильных, не завися от шапки -->
+                        <button id="hero-call-btn" onclick="revealHeroPhone(this)"
+                            class="flex-1 bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-200 text-lg px-8 py-4 rounded-2xl font-bold transition text-center flex items-center justify-center gap-2 active:scale-95">
+                            Позвонить
+                        </button>
+                    </div>
+                </div>
+                <!-- Chat Simulation: order-2 on mobile (Second), order-2 on desktop (Second) -->
+                <div class="order-1 lg:order-2 relative">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-brand-100 to-slate-50 rounded-[40px] transform rotate-3 scale-95 -z-10">
+                    </div>
+                    <div class="relative z-10 space-y-4 max-w-md mx-auto">
+                        <div class="flex items-end gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xl overflow-hidden shrink-0">
+                                👨‍💼</div>
+                            <div
+                                class="bg-white p-4 rounded-2xl rounded-bl-none shadow-sm border border-slate-100 max-w-[85%]">
+                                <p class="text-slate-800 font-medium leading-snug">Артур, здравствуйте! Индукция
+                                    перестала видеть посуду. Сможете помочь?</p>
+                                <span class="text-[10px] text-slate-400 block mt-1 text-right">18:20</span>
+                            </div>
+                        </div>
+                        <div class="flex items-end gap-3 justify-end">
+                            <div
+                                class="bg-brand-600 p-4 rounded-2xl rounded-br-none shadow-md shadow-brand-500/20 max-w-[85%]">
+                                <p class="text-white font-medium leading-snug">Добрый день! Да, конечно. Это частая
+                                    проблема. Готов выехать к вам прямо сейчас.</p>
+                                <div class="flex items-center justify-end gap-1 mt-1">
+                                    <span class="text-[10px] text-brand-100">18:23</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-brand-100"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div
+                                class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+                                    alt="Артур" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white/80 backdrop-blur p-3 rounded-xl border border-slate-100 shadow-floating w-fit mx-auto mt-6 flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                            <span class="text-sm font-bold text-slate-700">Артур печатает...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANDS -->
+    <section class="py-10 border-y border-slate-100 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <p class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">Ремонтирую все бренды
+            </p>
+            <div
+                class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 items-center justify-items-center">
+                <span class="text-xl md:text-2xl font-bold text-slate-800">BOSCH</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">Electrolux</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">SAMSUNG</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">Gorenje</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">Hansa</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">ZANUSSI</span>
+                <span class="text-xl md:text-2xl font-bold text-slate-800">AEG</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- УСЛУГИ -->
+    <section id="services" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center justify-between mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900">Всё починим!</h2>
+            </div>
+            <!-- Изменено: grid-cols-2 для мобильных (вместо 1) -->
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6">
+                <!-- 6 Виджетов -->
+                <div onclick="openModal('Индукция')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" />
+                            <path d="M12 8v8" />
+                            <path d="M8 12h8" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Индукция</h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Ремонт электроники, замена
+                        стекла.</p>
+                </div>
+                <div onclick="openModal('Стеклокерамика')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <circle cx="12" cy="12" r="4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-base md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Стеклокерамика
+                    </h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Замена конфорок, ремонт лент.
+                    </p>
+                </div>
+                <div onclick="openModal('Электроплиты')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-500 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" />
+                            <circle cx="8" cy="8" r="2" />
+                            <circle cx="16" cy="8" r="2" />
+                            <circle cx="8" cy="16" r="2" />
+                            <circle cx="16" cy="16" r="2" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Электроплиты</h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Классические плиты, духовки.
+                    </p>
+                </div>
+                <div onclick="openModal('Электроника')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-500 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M8.5 3v18" />
+                            <path d="M15.5 3v18" />
+                            <path d="M3 8.5h18" />
+                            <path d="M3 15.5h18" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Электроника</h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Пайка плат, прошивка.</p>
+                </div>
+                <div onclick="openModal('Подключение')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-green-50 rounded-2xl flex items-center justify-center text-green-500 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Проводка</h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Восстановление контактов,
+                        вилок.</p>
+                </div>
+                <div onclick="openModal('Установка')"
+                    class="widget-card bg-white p-5 md:p-6 rounded-3xl border border-slate-100 cursor-pointer group active:scale-98 transition-transform duration-150">
+                    <div
+                        class="w-10 h-10 md:w-12 md:h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-700 shadow-sm mb-3 md:mb-4 group-hover:scale-110 transition shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-1 md:mb-2 leading-tight">Монтаж</h3>
+                    <p class="text-xs md:text-sm text-slate-500 font-medium leading-snug">Установка и подключение.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПРЕИМУЩЕСТВА (Обновленная сетка для длинных слов) -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <!-- Grid: Изменено на 2 колонки для мобильных -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
+                <div
+                    class="bg-slate-50 rounded-3xl p-5 md:p-8 border border-slate-100 h-full flex flex-col justify-start">
+                    <div class="text-2xl md:text-3xl mb-2 md:mb-3 shrink-0">💰</div>
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Честная цена</h3>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 leading-snug">Озвучиваю до начала работ</p>
+                </div>
+                <div
+                    class="bg-slate-50 rounded-3xl p-5 md:p-8 border border-slate-100 h-full flex flex-col justify-start">
+                    <div class="text-2xl md:text-3xl mb-2 md:mb-3 shrink-0">🛠</div>
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Спец инструмент</h3>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 leading-snug">Паяльная станция с собой</p>
+                </div>
+                <div
+                    class="bg-slate-50 rounded-3xl p-5 md:p-8 border border-slate-100 h-full flex flex-col justify-start">
+                    <div class="text-2xl md:text-3xl mb-2 md:mb-3 shrink-0">📄</div>
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Чек + Гарантия</h3>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 leading-snug">Официально, самозанятый</p>
+                </div>
+                <div
+                    class="bg-slate-50 rounded-3xl p-5 md:p-8 border border-slate-100 h-full flex flex-col justify-start">
+                    <div class="text-2xl md:text-3xl mb-2 md:mb-3 shrink-0">📦</div>
+                    <h3 class="font-bold text-slate-900 text-sm md:text-base leading-tight">Свой склад</h3>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 leading-snug">Запчасти без наценки</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОРТФОЛИО -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-10">Мои работы</h2>
+            <div class="relative group">
+                <!-- Navigation Buttons (Desktop) -->
+                <button onclick="scrollPortfolio('left')"
+                    class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-brand-600 hover:scale-110 transition opacity-0 group-hover:opacity-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button onclick="scrollPortfolio('right')"
+                    class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center text-brand-600 hover:scale-110 transition opacity-0 group-hover:opacity-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+
+                <!-- Carousel Container -->
+                <div id="portfolio-container"
+                    class="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 pb-8 -mx-4 px-4 md:mx-0 md:px-0 no-scrollbar">
+
+                    {% if portfolio_items %}
+                    {% for item in portfolio_items %}
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}"
+                                    alt="{{ item.title }}" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    {{ item.location }}</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">{{ item.title }}</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">{{ item.description }}</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">{{ item.price }}</span>
+                                    <span class="text-xs text-slate-400">{{ item.location }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <!-- Case 1 -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1593106578502-27fa8479d060?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Electrolux</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Ремонт модуля</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Восстановил плату после скачка. Экономия
+                                    7000₽
+                                    (новая плата).</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">3500 ₽</span>
+                                    <span class="text-xs text-slate-400">ул. Ленина</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Case 2 -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1542834369-a5651048454b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Gorenje</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Замена переключателя</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Плита не регулировалась. Заменил пакетник
+                                    на
+                                    оригинал.</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">1800 ₽</span>
+                                    <span class="text-xs text-slate-400">ЗЖМ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Case 3 -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1621905476059-5f69547c735c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Hansa</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Восстановление проводки</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Сгорела клеммная колодка. Зачистил, обжал
+                                    новые
+                                    клеммы.</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">2000 ₽</span>
+                                    <span class="text-xs text-slate-400">Центр</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Case 4 (New) -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Bosch</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Замена ТЭНа</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Духовка перестала греть снизу. Заменил
+                                    сгоревший ТЭН.</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">2500 ₽</span>
+                                    <span class="text-xs text-slate-400">СЖМ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Case 5 (New) -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1588854337448-b763a029813a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Siemens</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Ремонт сенсора</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Плита пищала и не включалась. Восстановил
+                                    дорожки на плате.</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">3000 ₽</span>
+                                    <span class="text-xs text-slate-400">Александровка</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Case 6 (New) -->
+                    <div class="min-w-[85%] md:min-w-[calc(33.333%-1rem)] snap-center">
+                        <div
+                            class="bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 widget-card h-full flex flex-col">
+                            <div class="h-48 bg-slate-200 overflow-hidden relative shrink-0">
+                                <img src="https://images.unsplash.com/photo-1609210083286-df445199d947?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    alt="Ремонт" class="w-full h-full object-cover">
+                                <div
+                                    class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Ariston</div>
+                            </div>
+                            <div class="p-6 flex flex-col grow">
+                                <h3 class="font-bold text-lg text-slate-900">Замена стекла</h3>
+                                <p class="text-sm text-slate-500 mt-1 grow">Разбили стекло. Заказал оригинал и установил
+                                    на месте.</p>
+                                <div
+                                    class="mt-4 pt-4 border-t border-slate-50 flex justify-between items-center shrink-0">
+                                    <span class="text-brand-600 font-bold">1500 ₽</span>
+                                    <span class="text-xs text-slate-400">Военвед</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICES -->
+    <section id="prices" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6 max-w-4xl">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-10">Прайс-лист</h2>
+
+            <div class="bg-slate-50 rounded-[32px] overflow-hidden border border-slate-100">
+                <div class="divide-y divide-slate-200">
+                    <!-- Items -->
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Не включается')">
+                        <p class="font-bold text-slate-900">Не включается / Ошибка</p>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1500 ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Не греет')">
+                        <p class="font-bold text-slate-900">Не видит посуду / Не греет</p>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1200 ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Выбивает автомат')">
+                        <div>
+                            <p class="font-bold text-slate-900">Выбивает автомат (КЗ)</p>
+                            <p class="text-xs text-red-500 mt-0.5">Срочный ремонт!</p>
+                        </div>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1500 ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Сенсоры')">
+                        <p class="font-bold text-slate-900">Глючат сенсоры</p>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1200 ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Треск')">
+                        <p class="font-bold text-slate-900">Треск или запах гари</p>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1500 ₽</span>
+                    </div>
+                    <div class="flex justify-between items-center p-6 hover:bg-white transition cursor-pointer"
+                        onclick="openModal('Выключается')">
+                        <p class="font-bold text-slate-900">Сама выключается</p>
+                        <span class="font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg text-sm">от 1000 ₽</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-slate-400 text-sm mt-6">Окончательная цена только после диагностики.</p>
+        </div>
+    </section>
+
+    <!-- СХЕМА РАБОТЫ -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-12">Как я работаю</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm mx-auto mb-4 font-bold text-brand-600">
+                        1</div>
+                    <h3 class="font-bold">Звонок</h3>
+                    <p class="text-sm text-slate-500">Уточняю детали</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm mx-auto mb-4 font-bold text-brand-600">
+                        2</div>
+                    <h3 class="font-bold">Выезд</h3>
+                    <p class="text-sm text-slate-500">Через 60 минут</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm mx-auto mb-4 font-bold text-brand-600">
+                        3</div>
+                    <h3 class="font-bold">Ремонт</h3>
+                    <p class="text-sm text-slate-500">У вас дома</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm mx-auto mb-4 font-bold text-brand-600">
+                        4</div>
+                    <h3 class="font-bold">Оплата</h3>
+                    <p class="text-sm text-slate-500">Чек и гарантия</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОТЗЫВЫ -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-12">Отзывы клиентов</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-6">
+                <div class="bg-slate-50 p-6 rounded-[32px] rounded-bl-none border border-slate-100">
+                    <div class="flex text-yellow-400 mb-2 text-sm">★★★★★</div>
+                    <p class="text-slate-700 text-sm mb-4">"Мастер приехал быстро, починил индукцию Bosch за час. Всё
+                        четко, без лишних слов. Рекомендую!"</p>
+                    <div class="font-bold text-slate-900 text-sm">Сергей К.</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-[32px] rounded-bl-none border border-slate-100">
+                    <div class="flex text-yellow-400 mb-2 text-sm">★★★★★</div>
+                    <p class="text-slate-700 text-sm mb-4">"Думала придется покупать новую панель, но Артур спас старую.
+                        Заменил стекло и что-то внутри."</p>
+                    <div class="font-bold text-slate-900 text-sm">Марина В.</div>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-[32px] rounded-bl-none border border-slate-100">
+                    <div class="flex text-yellow-400 mb-2 text-sm">★★★★☆</div>
+                    <p class="text-slate-700 text-sm mb-4">"Хороший мастер. Пришлось подождать запчасть пару дней, но
+                        зато сделал качественно."</p>
+                    <div class="font-bold text-slate-900 text-sm">Дмитрий</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СОВЕТЫ И ПРЕДУПРЕЖДЕНИЯ -->
+    <section class="py-20 bg-slate-50 border-t border-slate-200">
+        <div class="container mx-auto px-4 md:px-6">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-10">Советы мастера</h2>
+            <!-- Изменено: grid-cols-2 для мобильных -->
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 mb-12">
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">🚫 Сахар — враг</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Убирайте сахар сразу. Застынет — испортит
+                        стекло навсегда.</p>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">🧲 Дно посуды</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Должно быть ровным и сухим. Влага создает
+                        "паровую подушку".</p>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">🔌 Охлаждение</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Не выдергивайте вилку сразу. Дайте
+                        вентилятору поработать.</p>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">🧽 Без абразивов</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Не трите металлической губкой. Появятся
+                        царапины и помутнения.</p>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">⚖️ Боится ударов</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Не роняйте ножи и тяжелые предметы.
+                        Точечный удар может расколоть стекло.</p>
+                </div>
+                <div class="bg-white p-5 md:p-6 rounded-3xl shadow-sm border border-slate-100 h-full">
+                    <h3 class="font-bold text-slate-900 text-sm md:text-lg mb-2">🧼 Только крем</h3>
+                    <p class="text-xs md:text-sm text-slate-500 leading-snug">Используйте спецсредства. Они создают
+                        защитную пленку от жира.</p>
+                </div>
+            </div>
+            <!-- Warning Box -->
+            <div class="max-w-4xl mx-auto bg-orange-50 rounded-[32px] p-8 border border-orange-100">
+                <h3 class="font-bold text-xl text-slate-900 mb-4 flex items-center gap-2">
+                    <span class="text-2xl">⚠️</span> Почему опасно чинить самому?
+                </h3>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3 text-sm text-slate-700">
+                        <span class="text-red-500 font-bold">×</span>
+                        <span><strong>Удар током:</strong> Конденсаторы бьют даже без розетки.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-700">
+                        <span class="text-red-500 font-bold">×</span>
+                        <span><strong>Пожар:</strong> Плохой контакт = плавление и огонь.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-sm text-slate-700">
+                        <span class="text-red-500 font-bold">×</span>
+                        <span><strong>Фатальная ошибка:</strong> Одно неверное движение паяльником — и плату (70% цены)
+                            можно выбрасывать.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6 max-w-3xl">
+            <h2 class="text-3xl font-extrabold text-slate-900 text-center mb-10">Частые вопросы</h2>
+            <div class="space-y-4">
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Сколько стоит выезд?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">В пределах Ростова-на-Дону выезд и диагностика при ремонте
+                        бесплатны. В случае отказа от ремонта оплачивается только диагностика (500 ₽).</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Даете ли вы гарантию?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">Да, я работаю официально как самозанятый. Предоставляю чек и
+                        гарантию на работы до 2 лет.</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        В какие районы вы выезжаете?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">Работаю по всем районам Ростова-на-Дону (СЖМ, ЗЖМ, Центр,
+                        Сельмаш, Александровка, Левенцовка, Военвед). В пригород и область не выезжаю.</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Нужно покупать запчасти?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">Нет, не нужно. У меня с собой набор ходовых оригинальных
+                        запчастей и качественных аналогов. Если потребуется что-то редкое, я сам съезжу на склад.</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Как можно оплатить?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">Принимаю оплату наличными или переводом на карту. Сразу после
+                        оплаты выдаю электронный чек.</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Работаете в выходные?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">Да, я работаю без выходных и праздников с 09:00 до 21:00.
+                        Стараюсь быть на связи всегда.</p>
+                </details>
+
+                <details class="group bg-slate-50 rounded-2xl p-4 cursor-pointer border border-slate-100">
+                    <summary class="font-bold text-slate-900 flex justify-between items-center">
+                        Сколько времени займет ремонт?
+                        <span class="transition group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="text-slate-600 mt-3 text-sm">В 90% случаев ремонт выполняется за один визит и занимает от
+                        40 минут до 1.5 часов.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-850 text-slate-400 py-12">
+        <div class="container mx-auto px-4 md:px-6 text-center">
+            <h4 class="text-white text-xl font-bold mb-2">Артур | Ваш домашний мастер</h4>
+            <p class="text-sm mb-6">Ремонт варочных панелей в Ростове-на-Дону.</p>
+            <div class="flex justify-center gap-4 text-xs mb-8">
+                <span>Работа с физ. лицами</span>
+                <span>•</span>
+                <span>Электронные чеки</span>
+                <span>•</span>
+                <span>Официальная гарантия</span>
+            </div>
+            <div class="text-xs text-slate-600">
+                &copy; 2025. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL (Стиль iOS) -->
+    <div id="modal-overlay"
+        class="fixed inset-0 bg-slate-900/40 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div id="modal-content"
+            class="bg-white rounded-[32px] w-full max-w-sm p-8 relative transform scale-95 transition-transform duration-300 shadow-2xl">
+            <button onclick="closeModal()"
+                class="absolute top-4 right-4 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-200 transition">
+                ✕
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                    👋</div>
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Напишите мне</h3>
+                <p class="text-slate-500 text-sm">Оставьте номер, я перезвоню через 5 минут.</p>
+            </div>
+            <form onsubmit="handleForm(event)" class="space-y-3">
+                <input type="hidden" id="service-type" name="service" value="Общая заявка">
+                <input type="text"
+                    class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-0 outline-none font-medium placeholder-slate-400"
+                    placeholder="Ваше имя">
+                <input type="tel" required
+                    class="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-500 focus:ring-0 outline-none font-medium placeholder-slate-400"
+                    placeholder="+7 (999) 000-00-00">
+                <button type="submit"
+                    class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-brand-500/30 transition transform active:scale-95">
+                    Жду звонка
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast"
+        class="fixed top-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl transform -translate-y-20 transition-all duration-500 z-[70] flex items-center gap-3 font-medium">
+        <span>✅</span>
+        <span>Сообщение отправлено!</span>
+    </div>
+
+    <script>
+        // Anti-spam phone reveal
+        const phoneNumber = "+7 (999) 000-00-00";
+        const cleanPhone = "+79990000000";
+
+        function revealPhoneHeader(btn) {
+            btn.parentElement.innerHTML = `
+                <a href="tel:${cleanPhone}" class="block text-lg font-bold text-slate-900 hover:text-brand-600 transition whitespace-nowrap">
+                    ${phoneNumber}
+                </a>
+                <span class="text-xs text-green-600 font-medium flex items-center justify-end gap-1">
+                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                    В сети
+                </span>
+            `;
+        }
+
+        // Logic for Hero Call Button (Mobile friendly)
+        function revealHeroPhone(btn) {
+            btn.outerHTML = `
+                <a href="tel:${cleanPhone}" class="flex-1 bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-200 text-lg px-8 py-4 rounded-2xl font-bold transition text-center flex items-center justify-center gap-2">
+                    ${phoneNumber}
+                </a>
+            `;
+        }
+
+        // Modal Logic
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        const serviceInput = document.getElementById('service-type');
+
+        function openModal(serviceName = 'Общая заявка') {
+            serviceInput.value = serviceName;
+            modalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                modalOverlay.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modalOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        function handleForm(e) {
+            e.preventDefault();
+            closeModal();
+            const toast = document.getElementById('toast');
+            toast.classList.remove('-translate-y-20');
+            setTimeout(() => {
+                toast.classList.add('-translate-y-20');
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
