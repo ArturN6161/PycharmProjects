@@ -81,13 +81,30 @@
 # Укажите наименьшее значение a, для которого F(a, 0) = 1392781243.
 
 
-def F(a, b):
-    if a == 0:
-        return b
-    if a > 0:
-        return F(a // 10, 10 * b + (a % 10))
+# def F(a, b):
+#     if a == 0:
+#         return b
+#     if a > 0:
+#         return F(a // 10, 10 * b + (a % 10))
 
-a = 0
-while F(a, 0) != 1392781243:
-    a += 1
-print(a)
+# a = 0
+# while F(a, 0) != 1392781243:
+#     a += 1
+# print(a)
+
+import time
+
+
+def W(row, pos):
+    if row < 1:  # точка остановки
+        return 0
+    if pos == row or pos == 0:  # край пирамиды
+        return (1 + W(row - 1, pos)) / 2
+    
+    return (W(row - 1, pos - 1) + W(row - 1, pos)) / 2 + 1
+
+
+print(W(20, 10))
+
+
+
