@@ -75,9 +75,9 @@ def logup_screen():
     return new_user, new_password
 
 
-def registration(new_user, new_password):
+def registration(login, password):
     with open('database.txt', 'a', encoding='utf-8') as file:
-        file.write(f'\n{new_user}:{new_password}')2
+        file.write(f'\n{login}:{password}')
 
 
 def validation(login, password):
@@ -96,7 +96,18 @@ def check_user(login):
             if len(date) == 2:
                 stored_login = date[0]
                 if login == stored_login:
+                    print("""
+        ***********************************
+        * ВНИМАНИЕ: ОШИБКА РЕГИСТРАЦИИ    *
+        ***********************************
+        * Пользователь с таким логином    *
+        * уже зарегистрирован в системе!  *
+        ***********************************
+        * Пожалуйста, выберите другое имя *
+        ***********************************
+                        """)
                     return True
+
     return False
 
 
@@ -110,49 +121,55 @@ def authorisation(login, password):
 
                 if login == stored_login and password == stored_password:
                     print("""
-                                    ***********************************
-                                    * ВХОД ВЫПОЛНЕН!           *
-                                    ***********************************
-                                    * Добро пожаловать в систему     *
-                                    ***********************************
+        ***********************************
+        * ВХОД ВЫПОЛНЕН!           *
+        ***********************************
+        * Добро пожаловать в систему     *
+        ***********************************
                                 """)
                     return True
 
         else:
             print("""
-                ***********************************
-                * ОШИБКА ДОСТУПА           *
-                ***********************************
-                * Неверный логин или пароль      *
-                * Попробуйте еще раз             *
-                ***********************************
+        ***********************************
+        * ОШИБКА ДОСТУПА           *
+        ***********************************
+        * Неверный логин или пароль      *
+        * Попробуйте еще раз             *
+        ***********************************
             """)
             return False
 
 
  #  Основной код
-selection = -1
 
  #  Вызов экрана приветствия
-while selection not in [0, 1, 2]:
+while True:
     selection = hello_screen()
 
  #  Выбор ответа от пользователя
 
-if selection == 1: #  Экран входа пользователя
-    print("\nПереход к авторизации...")
-    login, password = login_screen()
-    if validation(login, password):
-        authorisation(login, password)
+    if selection == 1: #  Экран входа пользователя
+        print("\nПереход к авторизации...")
+        login, password = login_screen()
+        if validation(login, password):
+            authorisation(login, password)
 
-elif selection == 2: #  Экран регистрации нового пользователя
-    print("\nПереходим к регистрации...")
-    login, password = logup_screen()
+    elif selection == 2: #  Экран регистрации нового пользователя
+        print("\nПереходим к регистрации...")
+        login, password = logup_screen()
+        if validation(login, password): #  Валидация
+            if not check_user(login): #  Проверка на уже существующего пользователя
+                registration(login, password)
+            else:
+                selection = -1
+                hello_screen()
 
-
-
-elif selection == 0:
-    exit()
+    elif selection == 0:
+        print("\nЗавершение работы...")
+        break
+    else:
+        continue
 
 
 
