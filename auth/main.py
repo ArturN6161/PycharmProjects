@@ -101,20 +101,19 @@ def check_user(login):
 def authorisation(login, password):
     with open('database.txt', 'r', encoding='utf-8') as file:
         for line in file:
-            date = line.strip().split(":")
-            if len(date) == 2:
-                stored_login = date[0]
-                stored_password = date[1]
+            date = line.strip().split(":", 1)
+            stored_login = date[0]
+            stored_password = date[1]
 
-                if login == stored_login and password == stored_password:
-                    print("""
-        ***********************************
-        * ВХОД ВЫПОЛНЕН!           *
-        ***********************************
-        * Добро пожаловать в систему     *
-        ***********************************
-                                """)
-                    return True
+            if login == stored_login and password == stored_password:
+                print("""
+    ***********************************
+    * ВХОД ВЫПОЛНЕН!           *
+    ***********************************
+    * Добро пожаловать в систему     *
+    ***********************************
+                            """)
+                return True
 
         else:
             print("""
