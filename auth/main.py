@@ -1,4 +1,4 @@
-class Credentials:
+class AuthData:
     database = 'database.txt'
 
 
@@ -57,7 +57,7 @@ def logup_screen():
 
 
 def registration(login, password):
-    with open(Credentials.database, 'a', encoding='utf-8') as file:
+    with open(AuthData.database, 'a', encoding='utf-8') as file:
         file.write(f'\n{login}:{password}')
         print('''
         ***********************************
@@ -82,7 +82,7 @@ def validation(login, password):
 
 def check_user(login):
     try:
-        with open(Credentials.database, 'r', encoding='utf-8') as file:
+        with open(AuthData.database, 'r', encoding='utf-8') as file:
             for line in file:
                 data = line.strip().split(':', 1)
                 stored_login = data[0]
@@ -113,7 +113,7 @@ def check_user(login):
 
 def authorisation(login, password):
     try:
-        with open(Credentials.database, 'r', encoding='utf-8') as file:
+        with open(AuthData.database, 'r', encoding='utf-8') as file:
             for line in file:
                 data = line.strip().split(':', 1)
                 stored_login = data[0]
