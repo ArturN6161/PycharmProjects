@@ -1,5 +1,9 @@
+class Credentials:
+    database = 'database.txt'
+
+
 def hello_screen():
-    print("""
+    print('''
         ***********************************
         * МЕНЮ АВТОРИЗАЦИИ         *
         ***********************************
@@ -7,55 +11,55 @@ def hello_screen():
         * [2] Регистрация                 *
         * [0] Выход                       *
         ***********************************
-        """)
+        ''')
 
-    user_input = input("Введите действие: ")
+    user_input = input('Введите действие: ')
 
     if user_input.isdigit():
         return int(user_input)
     else:
-        print("\nОшибка ввода: введите ответ цифрами 0, 1 или 2.")
+        print('\nОшибка ввода: введите ответ цифрами 0, 1 или 2.')
         return -1
 
 
 def login_screen():
-    print("""
+    print('''
         ***********************************
         * ОКНО АВТОРИЗАЦИИ         *
         ***********************************
         * Пожалуйста, введите ваши данные *
         ***********************************
-        """)
+        ''')
 
-    user_name = input("        ЛОГИН: ")
-    user_password = input("        ПАРОЛЬ: ")
+    user_name = input('        ЛОГИН: ')
+    user_password = input('        ПАРОЛЬ: ')
 
-    print("    *******************************")
+    print('    *******************************')
 
     return user_name, user_password
 
 def logup_screen():
-    print("""
+    print('''
         ***********************************
         * ОКНО РЕГИСТРАЦИИ         *
         ***********************************
         * Логин: 3-20 симв.               *
         * Пароль: 4-32 симв.              *
         ***********************************
-        """)
+        ''')
 
-    new_user = input("        ПРИДУМАЙТЕ ЛОГИН: ")
-    new_password = input("        ПРИДУМАЙТЕ ПАРОЛЬ: ")
+    new_user = input('        ПРИДУМАЙТЕ ЛОГИН: ')
+    new_password = input('        ПРИДУМАЙТЕ ПАРОЛЬ: ')
 
-    print("    *******************************")
+    print('    *******************************')
 
     return new_user, new_password
 
 
 def registration(login, password):
-    with open('database.txt', 'a', encoding='utf-8') as file:
+    with open(Credentials.database, 'a', encoding='utf-8') as file:
         file.write(f'\n{login}:{password}')
-        print("""
+        print('''
         ***********************************
         * УСПЕХ: АККАУНТ СОЗДАН!          *
         ***********************************
@@ -64,7 +68,7 @@ def registration(login, password):
         ***********************************
         * Теперь вы можете авторизоваться *
         ***********************************
-        """)
+        ''')
 
 
 def validation(login, password):
@@ -72,18 +76,18 @@ def validation(login, password):
         return True
 
     else:
-        print("Ошибка: Несоответствие длины логина или пароля!")
+        print('Ошибка: Несоответствие длины логина или пароля!')
         return False
 
 
 def check_user(login):
-    with open('database.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            date = line.strip().split(":")
-            if len(date) == 2:
-                stored_login = date[0]
+    try:
+        with open(Credentials.database, 'r', encoding='utf-8') as file:
+            for line in file:
+                data = line.strip().split(':', 1)
+                stored_login = data[0]
                 if login == stored_login:
-                    print("""
+                    print('''
         ***********************************
         * ВНИМАНИЕ: ОШИБКА РЕГИСТРАЦИИ    *
         ***********************************
@@ -92,43 +96,61 @@ def check_user(login):
         ***********************************
         * Пожалуйста, выберите другое имя *
         ***********************************
-                        """)
+                        ''')
                     return True
+    except FileNotFoundError:
+        print('''
+        ***********************************
+        * КРИТИЧЕСКАЯ ОШИБКА              *
+        ***********************************
+        * Файл базы данных                *
+        * не обнаружен в системе.         *
+        ***********************************
+''')
 
     return False
 
 
 def authorisation(login, password):
-    with open('database.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            date = line.strip().split(":", 1)
-            stored_login = date[0]
-            stored_password = date[1]
+    try:
+        with open(Credentials.database, 'r', encoding='utf-8') as file:
+            for line in file:
+                data = line.strip().split(':', 1)
+                stored_login = data[0]
+                stored_password = data[1]
 
-            if login == stored_login and password == stored_password:
-                print("""
-    ***********************************
-    * ВХОД ВЫПОЛНЕН!           *
-    ***********************************
-    * Добро пожаловать в систему     *
-    ***********************************
-                            """)
-                return True
+                if login == stored_login and password == stored_password:
+                    print('''
+        ***********************************
+        * ВХОД ВЫПОЛНЕН!           *
+        ***********************************
+        * Добро пожаловать в систему     *
+        ***********************************
+                                ''')
+                    return True
 
-        else:
-            print("""
+            else:
+                print('''
         ***********************************
         * ОШИБКА ДОСТУПА           *
         ***********************************
         * Неверный логин или пароль      *
         * Попробуйте еще раз             *
         ***********************************
-            """)
-            return False
+                ''')
+                return False
+    except FileNotFoundError:
+        print('''
+            ***********************************
+            * КРИТИЧЕСКАЯ ОШИБКА              *
+            ***********************************
+            * Файл базы данных                *
+            * не обнаружен в системе.         *
+            ***********************************
+        ''')
 
 
-     #  Основной код
-if __name__ == "__main__":
+def main():
      #  Вызов экрана приветствия
      try:
         while True:
@@ -137,13 +159,14 @@ if __name__ == "__main__":
          #  Выбор ответа от пользователя
 
             if selection == 1: #  Экран входа пользователя
-                print("\nПереход к авторизации...")
+                print('\nПереход к авторизации...')
                 login, password = login_screen()
                 if validation(login, password):
-                    authorisation(login, password)
+                    if authorisation(login, password):
+                        break
 
             elif selection == 2: #  Экран регистрации нового пользователя
-                print("\nПереходим к регистрации...")
+                print('\nПереходим к регистрации...')
                 login, password = logup_screen()
                 if validation(login, password): #  Валидация
                     if not check_user(login): #  Проверка на уже существующего пользователя
@@ -153,12 +176,17 @@ if __name__ == "__main__":
                         hello_screen()
 
             elif selection == 0:
-                print("\nЗавершение работы...")
+                print('\nЗавершение работы...')
                 break
             else:
                 continue
      except KeyboardInterrupt:
-         print("\nПрограмма была внезапно прервана...")
+         print('\nПрограмма была внезапно прервана...')
+
+
+#  Основной код
+if __name__ == '__main__':
+    main()
 
 
 
