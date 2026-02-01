@@ -1,4 +1,3 @@
-from venv import create
 import auth
 
 class Player:
@@ -46,7 +45,10 @@ class ManagedFile:
         if self.file:
             self.file.close()
 
-auth()
+
+if __name__ == "__main__":
+    play_game = auth.User('', '', -1)
+    play_game.start_session()
 
 
 
